@@ -34,9 +34,9 @@ pipeline {
 
         stage('Push to ACR') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'acr-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'acr-creds', usernameVariable: 'Username', passwordVariable: 'Password')]) {
                     sh """
-                    echo $PASSWORD | docker login ${ACR_NAME} -u $USERNAME --password-stdin
+                    echo $PASSWORD | docker login ${ACR_NAME} -u $Username --password-stdin
                     docker push ${ACR_NAME}/${BUILD_TAGGED}
                     """
                 }
