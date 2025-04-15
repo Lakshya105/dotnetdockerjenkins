@@ -58,7 +58,8 @@ pipeline {
                       --registry-password $Password \
                       --dns-name-label product-api-${BUILD_NUMBER} \
                       --ports 80 \
-                      --location ${LOCATION}
+                      --location ${LOCATION}\
+                      --os-type Linux
                     """
                 }
             }
