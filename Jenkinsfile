@@ -60,6 +60,8 @@ pipeline {
                       --ports 80 \
                       --location ${LOCATION}\
                       --os-type Linux
+                      --cpu 1 \
+                      --memory 1.5
                     """
                 }
             }
