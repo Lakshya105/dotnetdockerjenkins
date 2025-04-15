@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/'
+                git 'https://github.com/sairam-swamy/dotnetdockerjenkins.git'
             }
         }
 
