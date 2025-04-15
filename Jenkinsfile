@@ -58,14 +58,15 @@ pipeline {
                       --registry-password $Password \
                       --dns-name-label product-api-${BUILD_NUMBER} \
                       --ports 80 \
-                      --location ${LOCATION}\
-                      --os-type Linux
                       --cpu 1 \
-                      --memory 1.5
+                      --memory 1.5 \
+                      --os-type Linux \
+                      --location ${LOCATION}
                     """
                 }
             }
         }
     }
 }
+
 
