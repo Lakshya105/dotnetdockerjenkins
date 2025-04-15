@@ -36,7 +36,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'acr-creds', usernameVariable: 'Username', passwordVariable: 'Password')]) {
                     sh """
-                    echo $PASSWORD | docker login ${ACR_NAME} -u $Username --password-stdin
+                    echo $Password | docker login ${ACR_NAME} -u $Username --password-stdin
                     docker push ${ACR_NAME}/${BUILD_TAGGED}
                     """
                 }
@@ -45,20 +45,22 @@ pipeline {
 
         stage('Deploy to ACI') {
             steps {
-                sh """
-                az container delete --name ${ACI_NAME} --resource-group ${AZURE_RG} --yes || true
+                withCredentials([usernamePassword(credentialsId: 'acr-creds', usernameVariable: 'Username', passwordVariable: 'Password')]) {
+                    sh """
+                    az container delete --name ${ACI_NAME} --resource-group ${AZURE_RG} --yes || true
 
-                az container create \
-                  --resource-group ${AZURE_RG} \
-                  --name ${ACI_NAME} \
-                  --image ${ACR_NAME}/${BUILD_TAGGED} \
-                  --registry-login-server ${ACR_NAME} \
-                  --registry-username $USERNAME \
-                  --registry-password $PASSWORD \
-                  --dns-name-label product-api-${BUILD_NUMBER} \
-                  --ports 80 \
-                  --location ${LOCATION}
-                """
+                    az container create \
+                      --resource-group ${AZURE_RG} \
+                      --name ${ACI_NAME} \
+                      --image ${ACR_NAME}/${BUILD_TAGGED} \
+                      --registry-login-server ${ACR_NAME} \
+                      --registry-username $Username \
+                      --registry-password $Password \
+                      --dns-name-label product-api-${BUILD_NUMBER} \
+                      --ports 80 \
+                      --location ${LOCATION}
+                    """
+                }
             }
         }
     }
