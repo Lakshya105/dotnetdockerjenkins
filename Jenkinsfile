@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Clone Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/sairam-swamy/dotnetdockerjenkins'
+                git branch: 'master', url: 'https://github.com/Lakshya105/dotnetdockerjenkins'
             }
         }
 
